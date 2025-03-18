@@ -1,3 +1,4 @@
+"use strict";
 "use server";
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -16,6 +17,26 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
 
 // src/share/ThemesCookie/server.ts
 var server_exports = {};
@@ -31,14 +52,14 @@ var settings = {
   cookieKey: "_theme_source_and_key_",
   defaultThemeKey: "dark"
 };
-var setThemesCookieSetting = async (name, value) => {
+var setThemesCookieSetting = (name, value) => __async(void 0, null, function* () {
   settings[name] = value;
-};
-var themesCookieReader = async () => {
+});
+var themesCookieReader = () => __async(void 0, null, function* () {
   var _a;
   let themeSource = "";
   let themeKey = settings.defaultThemeKey;
-  const store = await (0, import_headers.cookies)();
+  const store = yield (0, import_headers.cookies)();
   const value = (_a = store.get(settings.cookieKey)) == null ? void 0 : _a.value;
   if (value) {
     [themeSource, themeKey] = value.split(delimeter);
@@ -51,11 +72,11 @@ var themesCookieReader = async () => {
       style: { colorScheme: themeKey }
     }
   };
-};
-var themesCookieWriter = async (themeSource, themeKey) => {
-  const store = await (0, import_headers.cookies)();
+});
+var themesCookieWriter = (themeSource, themeKey) => __async(void 0, null, function* () {
+  const store = yield (0, import_headers.cookies)();
   store.set(settings.cookieKey, [themeSource, themeKey].join(delimeter));
-};
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   setThemesCookieSetting,

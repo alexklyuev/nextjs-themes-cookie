@@ -8,4 +8,5 @@ export default defineConfig({
   splitting: false,
   external: ["react", "next"],
   clean: true,
+  dts: true,
 })
