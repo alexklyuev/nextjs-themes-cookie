@@ -1,122 +1,66 @@
-"use strict";
-"use client";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+
+var _chunkM3S73NSZjs = require('./chunk-M3S73NSZ.js');
 
 // src/share/ThemesCookie/client.tsx
-var client_exports = {};
-__export(client_exports, {
-  ThemesCookieProviders: () => TCProvider,
-  useThemesCookie: () => useTCContext
-});
-module.exports = __toCommonJS(client_exports);
-var import_react = __toESM(require("react"));
 
-// src/share/ThemesCookie/server.ts
-var import_headers = require("next/headers");
-var delimeter = ",";
-var settings = {
-  cookieKey: "_theme_source_and_key_",
-  defaultThemeKey: "dark"
-};
-var themesCookieReader = async () => {
-  let themeSource = "";
-  let themeKey = settings.defaultThemeKey;
-  const store = await (0, import_headers.cookies)();
-  const value = store.get(settings.cookieKey)?.value;
-  if (value) {
-    [themeSource, themeKey] = value.split(delimeter);
-  }
-  return {
-    themeSource,
-    themeKey,
-    htmlProps: {
-      className: themeKey,
-      style: { colorScheme: themeKey }
-    }
-  };
-};
-var themesCookieWriter = async (themeSource, themeKey) => {
-  const store = await (0, import_headers.cookies)();
-  store.set(settings.cookieKey, [themeSource, themeKey].join(delimeter));
-};
 
-// src/share/ThemesCookie/client.tsx
-var TCContext = (0, import_react.createContext)({ setTheme: () => {
+
+
+
+
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var TCContext = _react.createContext.call(void 0, { setTheme: () => {
 } });
 var TCProvider = ({ children }) => {
-  const mediaQueryRef = (0, import_react.useRef)(
+  const mediaQueryRef = _react.useRef.call(void 0, 
     typeof window !== "undefined" ? window.matchMedia("(prefers-color-scheme: dark)") : null
   );
-  const removeListenerRef = (0, import_react.useRef)(null);
-  const systemSetter = (0, import_react.useCallback)(({ matches }) => {
+  const removeListenerRef = _react.useRef.call(void 0, null);
+  const systemSetter = _react.useCallback.call(void 0, ({ matches }) => {
     const computedKey = matches ? "dark" : "light";
-    themesCookieWriter("system", computedKey);
+    _chunkM3S73NSZjs.themesCookieWriter.call(void 0, "system", computedKey);
   }, []);
-  const removeEventListener = (0, import_react.useCallback)(() => {
+  const removeEventListener = _react.useCallback.call(void 0, () => {
     if (removeListenerRef.current) {
       removeListenerRef.current();
       removeListenerRef.current = null;
     }
   }, []);
-  const addEventListener = (0, import_react.useCallback)(() => {
+  const addEventListener = _react.useCallback.call(void 0, () => {
     removeEventListener();
     if (mediaQueryRef.current) {
       mediaQueryRef.current.addEventListener("change", systemSetter);
-      removeListenerRef.current = () => mediaQueryRef.current?.removeEventListener("change", systemSetter);
+      removeListenerRef.current = () => _optionalChain([mediaQueryRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.removeEventListener, 'call', _3 => _3("change", systemSetter)]);
     }
   }, [removeEventListener, systemSetter]);
-  const setTheme = (0, import_react.useCallback)(
+  const setTheme = _react.useCallback.call(void 0, 
     (themeKey) => {
       removeEventListener();
       if (themeKey === "system") {
         if (mediaQueryRef.current) systemSetter(mediaQueryRef.current);
         addEventListener();
       } else {
-        themesCookieWriter("", themeKey);
+        _chunkM3S73NSZjs.themesCookieWriter.call(void 0, "", themeKey);
       }
     },
     [addEventListener, removeEventListener, systemSetter]
   );
-  (0, import_react.useEffect)(() => {
-    themesCookieReader().then(({ themeSource }) => {
+  _react.useEffect.call(void 0, () => {
+    _chunkM3S73NSZjs.themesCookieReader.call(void 0, ).then(({ themeSource }) => {
       if (themeSource === "system") {
         addEventListener();
       }
     });
   }, [addEventListener]);
-  return /* @__PURE__ */ import_react.default.createElement(TCContext.Provider, { value: { setTheme } }, children);
+  return /* @__PURE__ */ _react2.default.createElement(TCContext.Provider, { value: { setTheme } }, children);
 };
 var useTCContext = () => {
-  return (0, import_react.useContext)(TCContext);
+  return _react.useContext.call(void 0, TCContext);
 };
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  ThemesCookieProviders,
-  useThemesCookie
-});
+
+
+
+exports.ThemesCookieProviders = TCProvider; exports.useThemesCookie = useTCContext;
