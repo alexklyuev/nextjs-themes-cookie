@@ -9,12 +9,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "peerDependencies": {
+    "@types/react": "^19",
+    "next": "^15",
+    "react": "^19",
+    "typescript": "^5"
+  },
   "devDependencies": {
-    "@types/react": "^19.0.11",
-    "next": "^15.2.3",
-    "react": "^19.0.0",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.2"
+    "tsup": "^8.4.0"
   },
   "license": "MIT"
 }
