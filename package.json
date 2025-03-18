@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "server.js",
   "exports": {
-    "./*": "./dist/*.js"
+    "./server": "./src/share/ThemesCookie/server.ts",
+    "./client": "./src/share/ThemesCookie/client.tsx"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
