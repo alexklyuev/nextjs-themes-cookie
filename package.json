@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "main": "./dist/server.js",
   "exports": {
-    "./server": "./dist/server.js",
-    "./client": "./dist/client.js"
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "next": "./dist/index.mjs"
+    }
   },
+  "types": "./dist/index.d.mts",
   "scripts": {
     "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
