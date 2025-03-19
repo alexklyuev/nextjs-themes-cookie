@@ -1,7 +1,7 @@
 {
   "name": "nextjs-themes-cookie",
   "version": "0.1.0",
-  "main": "server.js",
+  "main": "./dist/server.js",
   "exports": {
     "./server": "./dist/server.js",
     "./client": "./dist/client.js"
