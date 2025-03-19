@@ -4,7 +4,7 @@ import React, { FC, PropsWithChildren } from 'react';
 type ReadonlyRequestCookies = ReturnType<typeof cookies>;
 type ThemeSource = "" | "system";
 type ThemeKey = "light" | "dark";
-declare const makeThemesCookieReadAction: (cookies: () => Promise<ReadonlyRequestCookies>, cookieKey: string, defaultThemeKey: ThemeKey) => () => Promise<{
+declare const makeThemesCookieReadAction: (cookies: () => ReadonlyRequestCookies, cookieKey: string, defaultThemeKey: ThemeKey) => () => Promise<{
     themeSource: ThemeSource;
     themeKey: ThemeKey;
     htmlProps: {
@@ -14,7 +14,7 @@ declare const makeThemesCookieReadAction: (cookies: () => Promise<ReadonlyReques
         };
     };
 }>;
-declare const makeThemesCookieWrireAction: (cookies: () => Promise<ReadonlyRequestCookies>, cookieKey: string) => (themeSource: ThemeSource, themeKey: ThemeKey) => Promise<void>;
+declare const makeThemesCookieWrireAction: (cookies: () => ReadonlyRequestCookies, cookieKey: string) => (themeSource: ThemeSource, themeKey: ThemeKey) => Promise<void>;
 
 declare const TCContext: React.Context<{
     setTheme: (themeKey: ThemeKey | "system") => void;
