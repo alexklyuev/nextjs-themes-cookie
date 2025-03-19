@@ -13,7 +13,7 @@ type CookieValue = `${ThemeSource}${Delimeter}${ThemeKey}`;
 const delimeter: Delimeter = ",";
 
 export const makeThemesCookieReadAction = (
-  cookies: () => Promise<ReadonlyRequestCookies>,
+  cookies: () => ReadonlyRequestCookies,
   cookieKey: string,
   defaultThemeKey: ThemeKey,
 ) => {
@@ -38,7 +38,7 @@ export const makeThemesCookieReadAction = (
 };
 
 export const makeThemesCookieWrireAction = (
-  cookies: () => Promise<ReadonlyRequestCookies>,
+  cookies: () => ReadonlyRequestCookies,
   cookieKey: string,
 ) => {
   return async (
