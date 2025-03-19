@@ -7,15 +7,22 @@
     "./client": "./src/share/ThemesCookie/client.tsx"
   },
   "scripts": {
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
     "@types/react": "^19",
     "next": "^15",
-    "react": "^19",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^5"
   },
   "devDependencies": {
+    "@types/react": "^19",
+    "next": "^15",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5",
     "tsup": "^8.4.0"
   },
   "license": "MIT"
