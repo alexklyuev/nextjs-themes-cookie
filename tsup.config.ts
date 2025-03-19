@@ -1,7 +1,10 @@
 import { defineConfig } from "tsup"
 
 export default defineConfig({
-  entry: ["src/share/ThemesCookie/index.ts"],
+  entry: [
+    "src/share/ThemesCookie/server.ts",
+    "src/share/ThemesCookie/client.tsx",
+  ],
   format: ['cjs', 'esm'],
   external: ["react", "next"],
   clean: true,

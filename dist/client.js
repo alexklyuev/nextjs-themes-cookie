@@ -27,46 +27,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// src/share/ThemesCookie/index.ts
-var index_exports = {};
-__export(index_exports, {
+// src/share/ThemesCookie/client.tsx
+var client_exports = {};
+__export(client_exports, {
   ThemesCookieContext: () => TCContext,
   ThemesCookieProvider: () => TCProvider,
-  makeThemesCookieReadAction: () => makeThemesCookieReadAction,
-  makeThemesCookieWrireAction: () => makeThemesCookieWrireAction,
   useThemesCookie: () => useTCContext
 });
-module.exports = __toCommonJS(index_exports);
-
-// src/share/ThemesCookie/server.ts
-var delimeter = ",";
-var makeThemesCookieReadAction = (cookies, cookieKey, defaultThemeKey) => {
-  return async () => {
-    let themeSource = "";
-    let themeKey = defaultThemeKey;
-    const store = await cookies();
-    const value = store.get(cookieKey)?.value;
-    if (value) {
-      [themeSource, themeKey] = value.split(delimeter);
-    }
-    return {
-      themeSource,
-      themeKey,
-      htmlProps: {
-        className: themeKey,
-        style: { colorScheme: themeKey }
-      }
-    };
-  };
-};
-var makeThemesCookieWrireAction = (cookies, cookieKey) => {
-  return async (themeSource, themeKey) => {
-    const store = await cookies();
-    store.set(cookieKey, [themeSource, themeKey].join(delimeter));
-  };
-};
-
-// src/share/ThemesCookie/client.tsx
+module.exports = __toCommonJS(client_exports);
 var import_react = __toESM(require("react"));
 var TCContext = (0, import_react.createContext)({ setTheme: () => {
 } });
@@ -121,7 +89,5 @@ var useTCContext = () => {
 0 && (module.exports = {
   ThemesCookieContext,
   ThemesCookieProvider,
-  makeThemesCookieReadAction,
-  makeThemesCookieWrireAction,
   useThemesCookie
 });
