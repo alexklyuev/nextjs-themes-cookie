@@ -1,9 +1,5 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
-
-
-var _chunkM3S73NSZjs = require('./chunk-M3S73NSZ.js');
-
 // src/share/ThemesCookie/client.tsx
 
 
@@ -14,14 +10,14 @@ var _chunkM3S73NSZjs = require('./chunk-M3S73NSZ.js');
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var TCContext = _react.createContext.call(void 0, { setTheme: () => {
 } });
-var TCProvider = ({ children }) => {
+var TCProvider = ({ children, readAction, writeAction }) => {
   const mediaQueryRef = _react.useRef.call(void 0, 
     typeof window !== "undefined" ? window.matchMedia("(prefers-color-scheme: dark)") : null
   );
   const removeListenerRef = _react.useRef.call(void 0, null);
   const systemSetter = _react.useCallback.call(void 0, ({ matches }) => {
     const computedKey = matches ? "dark" : "light";
-    _chunkM3S73NSZjs.themesCookieWriter.call(void 0, "system", computedKey);
+    writeAction("system", computedKey);
   }, []);
   const removeEventListener = _react.useCallback.call(void 0, () => {
     if (removeListenerRef.current) {
@@ -38,18 +34,19 @@ var TCProvider = ({ children }) => {
   }, [removeEventListener, systemSetter]);
   const setTheme = _react.useCallback.call(void 0, 
     (themeKey) => {
+      console.log("internal set theme");
       removeEventListener();
       if (themeKey === "system") {
         if (mediaQueryRef.current) systemSetter(mediaQueryRef.current);
         addEventListener();
       } else {
-        _chunkM3S73NSZjs.themesCookieWriter.call(void 0, "", themeKey);
+        writeAction("", themeKey);
       }
     },
     [addEventListener, removeEventListener, systemSetter]
   );
   _react.useEffect.call(void 0, () => {
-    _chunkM3S73NSZjs.themesCookieReader.call(void 0, ).then(({ themeSource }) => {
+    readAction().then(({ themeSource }) => {
       if (themeSource === "system") {
         addEventListener();
       }
@@ -63,4 +60,5 @@ var useTCContext = () => {
 
 
 
-exports.ThemesCookieProviders = TCProvider; exports.useThemesCookie = useTCContext;
+
+exports.ThemesCookieContext = TCContext; exports.ThemesCookieProvider = TCProvider; exports.useThemesCookie = useTCContext;

@@ -1,6 +1,8 @@
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+
 type ThemeSource = "" | "system";
 type ThemeKey = "light" | "dark";
-type ReaderResult = {
+declare const makeThemesCookieReadAction: (cookies: () => Promise<ReadonlyRequestCookies>, cookieKey: string, defaultThemeKey: ThemeKey) => () => Promise<{
     themeSource: ThemeSource;
     themeKey: ThemeKey;
     htmlProps: {
@@ -9,13 +11,7 @@ type ReaderResult = {
             colorScheme: ThemeKey;
         };
     };
-};
-declare const settings: {
-    cookieKey: string;
-    defaultThemeKey: ThemeKey;
-};
-declare const setThemesCookieSetting: <T extends keyof typeof settings>(name: T, value: (typeof settings)[T]) => Promise<void>;
-declare const themesCookieReader: () => Promise<ReaderResult>;
-declare const themesCookieWriter: (themeSource: ThemeSource, themeKey: ThemeKey) => Promise<void>;
+}>;
+declare const makeThemesCookieWrireAction: (cookies: () => Promise<ReadonlyRequestCookies>, cookieKey: string) => (themeSource: ThemeSource, themeKey: ThemeKey) => Promise<void>;
 
-export { type ThemeKey, type ThemeSource, setThemesCookieSetting, themesCookieReader, themesCookieWriter };
+export { type ThemeKey, type ThemeSource, makeThemesCookieReadAction, makeThemesCookieWrireAction };

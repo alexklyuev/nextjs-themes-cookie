@@ -1,9 +1,16 @@
-import { FC, PropsWithChildren } from 'react';
-import { ThemeKey } from './server.js';
+import React, { FC, PropsWithChildren } from 'react';
+import { makeThemesCookieReadAction, makeThemesCookieWrireAction, ThemeKey } from './server.js';
+import 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
-declare const TCProvider: FC<PropsWithChildren>;
+declare const TCContext: React.Context<{
+    setTheme: (themeKey: ThemeKey | "system") => void;
+}>;
+declare const TCProvider: FC<PropsWithChildren<{
+    readAction: ReturnType<typeof makeThemesCookieReadAction>;
+    writeAction: ReturnType<typeof makeThemesCookieWrireAction>;
+}>>;
 declare const useTCContext: () => {
     setTheme: (themeKey: ThemeKey | "system") => void;
 };
 
-export { TCProvider as ThemesCookieProviders, useTCContext as useThemesCookie };
+export { TCContext as ThemesCookieContext, TCProvider as ThemesCookieProvider, useTCContext as useThemesCookie };
