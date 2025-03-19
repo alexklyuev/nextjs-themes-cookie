@@ -5,7 +5,7 @@ export default defineConfig({
     "src/share/ThemesCookie/server.ts",
     "src/share/ThemesCookie/client.tsx",
   ],
-  format: ['cjs', 'esm'],
+  format: 'esm',
   external: ["react", "next"],
   clean: true,
   dts: true,
