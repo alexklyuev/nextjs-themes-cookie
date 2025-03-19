@@ -1,4 +1,6 @@
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+
+type ReadonlyRequestCookies = ReturnType<typeof cookies>;
 
 export type ThemeSource = "" | "system";
 

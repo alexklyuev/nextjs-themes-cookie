@@ -1,6 +1,7 @@
-import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import { cookies } from 'next/headers';
 import React, { FC, PropsWithChildren } from 'react';
 
+type ReadonlyRequestCookies = ReturnType<typeof cookies>;
 type ThemeSource = "" | "system";
 type ThemeKey = "light" | "dark";
 declare const makeThemesCookieReadAction: (cookies: () => Promise<ReadonlyRequestCookies>, cookieKey: string, defaultThemeKey: ThemeKey) => () => Promise<{
