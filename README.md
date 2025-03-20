@@ -6,48 +6,82 @@ Supports system theme with dynamic switching.
 
 Alternative to `next-themes`
 
-## Override default settings (optionally) ##
-```js
-import { setThemesCookieSetting } from "nextjs-themes-cookie/server";
+## Usage ##
 
-setThemesCookieSetting("cookieKey", "_theme_");
-setThemesCookieSetting("defaultThemeKey", "dark");
+### Create server actions file ###
+```ts
+"use server";
+
+import { cookies } from "next/headers";
+import {
+  makeThemesCookieReadAction,
+  makeThemesCookieWrireAction,
+} from "nextjs-themes-cookie/server";
+
+const cookieKey = "theme";
+
+export const themesCookieReadAction = makeThemesCookieReadAction(
+  cookies,
+  cookieKey,
+  "dark"
+);
+
+export const themesCookieWriteAction = makeThemesCookieWrireAction(
+  cookies,
+  cookieKey
+);
 ```
-_In the root laout file, before component declaration_
 
-## Add given props to root html tag ##
-```js
-import { themesCookieReader } from "nextjs-themes-cookie/server";
+### Create file for client provider ###
+```ts
+"use client";
 
-  const { htmlProps } = await themesCookieReader();
+import { type FC, type PropsWithChildren } from "react";
+import { ThemesCookieProvider } from "nextjs-themes-cookie/client";
+import {
+  themesCookieReadAction,
+  themesCookieWriteAction,
+} from "./cookiesAction";
+
+export const ThemeCookieProviderWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <html
-      lang="en"
-      {...htmlProps}
+    <ThemesCookieProvider
+      readAction={themesCookieReadAction}
+      writeAction={themesCookieWriteAction}
     >
-    ...
+      {children}
+    </ThemesCookieProvider>
+  );
+};
 ```
-_In the root layout_
 
-## Wrap app in the provider ##
-```jsx
-import { ThemesCookieProviders } from "nextjs-themes-cookie/client";
-...
-
-  <ThemesCookieProviders>
-    {children}
-  </ThemesCookieProviders>
+### Place reader action results (htmlProps) and provider in root layout ###
+```ts
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const { htmlProps } = await themesCookieReadAction();
+  return (
+    <html lang="en" {...htmlProps}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ThemeCookieProviderWrapper>{children}</ThemeCookieProviderWrapper>
+      </body>
+    </html>
+  );
+}
 ```
-_In the root layout_
 
-## Use the function from hook to set theme ##
-```js
+### Use hook to change theme in some client component ###
+```ts
 import { useThemesCookie } from "nextjs-themes-cookie/client";
 ...
-
   const { setTheme } = useThemesCookie();
+  ...
 ```
-_in any component inside the provider_
 
 ## Notes ##
 ### Cookie value ###
