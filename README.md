@@ -36,7 +36,7 @@ export const themesCookieWriteAction = makeThemesCookieWrireAction(
 ```ts
 "use client";
 
-import { type FC, type PropsWithChildren } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { ThemesCookieProvider } from "nextjs-themes-cookie/client";
 import {
   themesCookieReadAction,
@@ -65,9 +65,7 @@ export default async function RootLayout({
   const { htmlProps } = await themesCookieReadAction();
   return (
     <html lang="en" {...htmlProps}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         <ThemeCookieProviderWrapper>{children}</ThemeCookieProviderWrapper>
       </body>
     </html>
